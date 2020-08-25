@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> HOME </title>
+    </head>
+    <body>
+        <h1> HELLO </h1>
+        <p> TEXT : {{content}}</p>
+        {% for x in range(10) %}
+            {% if x % 2 == 1 %}
+                <p> IMPAR: {{x}} </p>
+            {% endif %} 
+        {% endfor %}
+    </body>
+</html>
