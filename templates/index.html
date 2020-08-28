@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title> HOME </title>
-    </head>
-    <body>
-        <h1> HELLO </h1>
-        <p> TEXT : {{content}}</p>
-        {% for x in range(10) %}
-            {% if x % 2 == 1 %}
-                <p> IMPAR: {{x}} </p>
-            {% endif %} 
-        {% endfor %}
-    </body>
-</html>
+{% extends "base.html" %}
+<!-- that means, every page that extends base.html, is the same as base.html -->
+{% block title_block %} 
+BOOTSTRAP - INHERITANCE 
+{% endblock %}
+{% block body_content %}
+<h1>TEEEEEST</h1>
+
+
+
+
+{% endblock %}

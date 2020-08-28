@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+    <!-- that means, every page that extends base.html, is the same as base.html -->
+{% block title_block %} 
+    HTTP METHODS (GET/POST)
+{% endblock %}
+{% block body_content %}
+    <form action="#" method="POST">
+        <p>NAME:</p>
+        <p><input type="text" name="_name"/></p>
+        <p><input type="submit" value="Submit"/></p>
+    </form>
+{% endblock %}
