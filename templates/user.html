@@ -5,4 +5,12 @@
 {% endblock %}
 {% block body_content %}
     <h1> HELLO {{user}} :D</h1> 
+
+    <form action="#" method="POST">
+        <input type="email" name="email" placeholder="Enter Email" value="{{email if email}}"/>
+        <!-- se tiver email mostra email se nao mostra o placeholder -->
+        <input type="submit" value="submit"/>
+    </form>
+
+
 {% endblock %}

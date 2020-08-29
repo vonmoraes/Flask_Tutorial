@@ -1,18 +1,36 @@
 from flask import (
-    Flask, redirect, url_for, render_template, request, session
+    Flask, redirect, url_for, render_template, request, session, flash
 )
 from datetime import timedelta
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 """
-! SESSION DATA
+! SESSION DATA AND APP CONFIG
 """
-app.secret_key = "HEAUH@#*&(!*#H$)@"
+app.secret_key = "precisaparacriarsesion"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(minutes=5)
+
+"""
+! MODULE
+"""
+db = SQLAlchemy(app)
+class user(db.Model):
+    _id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    email = db.Column( db.String(100))
+
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
+    pass
+pass
 
 @app.route("/")
 def home():
-    return redirect(url_for("login"))
+    return render_template("index.html")
 pass
 
 """
@@ -65,14 +83,27 @@ pass
 """
 ! #4 HTTP Methods (GET/POST)
 ! #5 SESSIONS
+! #6 FLASH
+! #7 SQLAlchemy
+! #8 Continuação SQLAlchemy
 """
 @app.route("/login", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
-        user = request.form["_name"]
-        if len(user) > 0:
+        _user = request.form["_name"]
+        if len(_user) > 0:
             session.permanent = True #by default session dont save permanent data
-            session["user"] = user
+            session["user"] = _user
+
+            found_user = user.query.filter_by(name=_user).first()
+            if found_user:
+                session["email"] = found_user.email
+            else:
+                usr = user(_user, "")
+                db.session.add(usr) # ADD TO DB
+                db.commit()
+
+
             return redirect(url_for("user"))
         else: 
             return render_template("login.html")
@@ -82,11 +113,17 @@ def login():
         return render_template("login.html")
 pass 
 
-@app.route("/user/")
+@app.route("/user/", methods=["POST", "GET"])
 def user():
+    email = None
     if "user" in session:
         user = session["user"]
-        print(user)
+        if request.method == "POST":
+            email = request.form["email"]
+            session["email"] = email
+        else:
+            if "email" in session:
+                email = session["email"]
         return render_template("user.html"
             ,user=user
         )
@@ -97,6 +134,8 @@ pass
 @app.route("/logout")
 def logout():
     session.pop("user", None)
+    session.pop("email", None)
+    flash("You have been logged out!", "info")
     return redirect(url_for("login"))
 pass
 
@@ -105,6 +144,7 @@ pass
 # Last video: Flask Tutorial #3
 if __name__ == "__main__":
     print("Hello o/")
+    db.create_all()
     # debug = true, restart the app when file is saved
     app.run(debug=True)
 pass
