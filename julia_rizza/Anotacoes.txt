@@ -1,0 +1,15 @@
+__init__.py é arquivo para trabalhar com módulos, conjunto definições/declaroces de funcoes e de classe. 
+Ou seja onde é módulo principal e submodulos
+
+NOTA: Aqui tá sendo utilizado o modelo MVC
+
+CONTROLLERS (LOGICA DA APPLICACAO)
+
+SqlAlquemy é uma ORM
+
+PAREI AULA 4
+
+https://www.youtube.com/watch?v=tJZjniFdaIw&list=PL3BqW_m3m6a05ALSBW02qDXmfDKIip2KX&index=5
+
+
+
