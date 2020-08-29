@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+    <!-- that means, every page that extends base.html, is the same as base.html -->
+{% block title_block %} 
+    VIEW USERS
+{% endblock %}
+{% block body_content %}
+    {% for item in values %}
+        <p> → {{item.id}}, {{item.name}}, {{item.email}}</p>
+    {% endfor %}
+{% endblock %}
