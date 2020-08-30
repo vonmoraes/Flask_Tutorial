@@ -33,9 +33,16 @@ pass
 def create_tables():
     db.create_all()
 
-@app.route("/")
+@app.route("/", methods=["POST", "GET"])
+@app.route("/home", methods=["POST", "GET"])
 def home():
-    return render_template("index.html")
+    if request.method == "POST":
+        print(f"titulo: {request.form['intent_title']}")
+        print(f"frases: {request.form['intent_training_phrases']}")
+        print(f"message: {request.form['intent_message']}")
+
+        print(request.form)
+    return render_template("new_intent.html")
 pass
 
 """
